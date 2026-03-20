@@ -1,13 +1,15 @@
-FROM golang:1.16-alpine
+FROM node:16-alpine
 
 WORKDIR /app
 
 COPY . .
 
-RUN go build -o server
 
-ENV PORT=8080
+RUN npm install
+RUN npm run build
 
-EXPOSE 8080
 
-CMD ["./server"]
+RUN npm install -g serve
+
+
+CMD ["serve", "-s", "-l", "5000", "build"]
